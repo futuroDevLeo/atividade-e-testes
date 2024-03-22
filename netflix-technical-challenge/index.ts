@@ -17,6 +17,6 @@ const solution = (s: string): string => {
     return "_";
 }
 
-console.log(solution("abacabad"));
-console.log(solution("abacabaabacaba"));
-console.log(solution("abcdefghijlmnopqrstuvxzzxvutsrqponmkljihgfedcba"));
+console.log(solution("abacabad")); // solution(s) = 'c'
+console.log(solution("abacabaabacaba")); // solution(s) = '_'
+console.log(solution("abcdefghijlmnopqrstuvxzzxvutsrqponmkljihgfedcba")); // solution(s) = 'k'
