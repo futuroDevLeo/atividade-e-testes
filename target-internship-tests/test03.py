@@ -45,6 +45,6 @@ for value in revenues:
     if value > average_revenue:
         days_above_average += 1
 
-print("Maior faturamento:", max_revenue)
 print("Menor faturamento:", min_revenue)
+print("Maior faturamento:", max_revenue)
 print('Quantidade de dias com faturamento acima da média:', days_above_average)
