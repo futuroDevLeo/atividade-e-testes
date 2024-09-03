@@ -29,7 +29,6 @@ max_revenue = float('-inf')
 
 for item in data:
     values = list(item.values())
-    day = values[0]
     revenue = values[1]
 
     if revenue > 0.0:
