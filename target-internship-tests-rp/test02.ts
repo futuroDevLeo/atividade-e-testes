@@ -17,10 +17,4 @@ for (let letter of wordArray) {
     }
 }
 
-if (count === 0) {
-    console.log(`Não existem letras 'a's na palavra ${word}!`);
-} else if (count === 1) {
-    console.log(`Existe ${count} letra 'a' na palavra ${word}!`);
-} else {
-    console.log(`Existem ${count} letras 'a's na palavra ${word}!`);
-}
+console.log(`A letra 'a' ou 'A' aparecem ${count} vezes na palavra ${word}!`);

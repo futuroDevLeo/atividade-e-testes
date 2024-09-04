@@ -5,13 +5,8 @@
 import * as rl from "readline-sync";
 
 const isFibonacciRange = (n: number): string => {
-    if (n === 0 || n === 1) {
-        return `O número ${n} FAZ parte da sequência Fibonacci`;
-    }
-
-    if (n < 0) {
-        return `O número ${n} NÃO FAZ parte da sequência Fibonacci`;
-    }
+    if (n === 0 || n === 1) return `O número ${n} pertence a sequência Fibonacci`;
+    if (n < 0) return `O número ${n} NÃO pertence a sequência Fibonacci`;
 
     let lastButOneTerm = 0;
     let lastTerm = 1;
@@ -22,11 +17,8 @@ const isFibonacciRange = (n: number): string => {
         lastTerm = newTerm;
     }
 
-    if (lastTerm === n) {
-        return `O número ${n} FAZ parte da sequência Fibonacci`;
-    } else {
-        return `O número ${n} NÃO FAZ parte da sequência Fibonacci`;
-    }
+    return lastTerm === n ? `O número ${n} pertence a sequência Fibonacci`
+        : `O número ${n} NÃO pertence a sequência Fibonacci`;
 }
 
 const numberProvided = rl.questionInt('Digite um numero: ');
