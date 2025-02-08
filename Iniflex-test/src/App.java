@@ -1,12 +1,10 @@
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +31,7 @@ public class App {
         Map<String, List<Funcionario>> funcionariosPorFuncao = agruparPorFuncao();
 
         aplicarAumento(0.10);
-        System.out.println("Funcionários após aumento de 10%:\n");
+        System.out.println("Todos os Funcionarios:\n");
         printFuncionarios();
         System.out.println("--------------------------------------------------\n");
         System.out.println("Funcionários agrupados por função:\n");
@@ -56,24 +54,13 @@ public class App {
 
     public static void aplicarAumento(double percentual) {
         for (Funcionario funcionario : funcionarios) {
-            BigDecimal aumento = funcionario.getSalario().multiply(BigDecimal.valueOf(percentual));
-            funcionario.setSalario(funcionario.getSalario().add(aumento));
+            funcionario.aumentarSalario(percentual);
         }
     }
 
     public static void printFuncionarios() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Locale localeBR = new Locale("pt", "BR");
-
         for (Funcionario funcionario : funcionarios) {
-            String dataFormatada = funcionario.getDataNascimento().format(dateFormatter);
-            String salarioFormatado = String.format(localeBR, "%,.2f", funcionario.getSalario());
-
-            System.out.println("Nome: " + funcionario.getNome());
-            System.out.println("Data de Nascimento: " + dataFormatada);
-            System.out.println("Salário: " + salarioFormatado);
-            System.out.println("Função: " + funcionario.getFuncao());
-            System.out.println();
+            funcionario.imprimir(true, true, true, true);
         }
     }
 
@@ -87,34 +74,19 @@ public class App {
 
     public static void printFuncionariosPorFuncao(Map<String, List<Funcionario>> map) {
         for (Map.Entry<String, List<Funcionario>> entry : map.entrySet()) {
-            System.out.println("Função: " + entry.getKey());
+            System.out.println("-- Função: " + entry.getKey() + " --");
             for (Funcionario funcionario : entry.getValue()) {
-                System.out.println("  Nome: " + funcionario.getNome());
-                System.out.println("  Data de Nascimento: "
-                        + funcionario.getDataNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                System.out.println(
-                        "  Salário: " + String.format(new Locale("pt", "BR"), "%,.2f", funcionario.getSalario()));
-                System.out.println();
+                funcionario.imprimir(true, true, true, false);
             }
         }
     }
 
     public static void printAniversariantes(int... meses) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Locale localeBR = new Locale("pt", "BR");
-
         for (Funcionario funcionario : funcionarios) {
             int mesNascimento = funcionario.getDataNascimento().getMonthValue();
             for (int mes : meses) {
                 if (mesNascimento == mes) {
-                    String dataFormatada = funcionario.getDataNascimento().format(dateFormatter);
-                    String salarioFormatado = String.format(localeBR, "%,.2f", funcionario.getSalario());
-
-                    System.out.println("Nome: " + funcionario.getNome());
-                    System.out.println("Data de Nascimento: " + dataFormatada);
-                    System.out.println("Salário: " + salarioFormatado);
-                    System.out.println("Função: " + funcionario.getFuncao());
-                    System.out.println();
+                    funcionario.imprimir(true, true, true, true);
                 }
             }
         }
@@ -125,7 +97,8 @@ public class App {
         int maiorIdade = 0;
 
         for (Funcionario funcionario : funcionarios) {
-            int idade = Period.between(funcionario.getDataNascimento(), LocalDate.now()).getYears();
+            int idade = funcionario.getIdade();
+
             if (idade > maiorIdade) {
                 maiorIdade = idade;
                 maisVelho = funcionario;
@@ -135,15 +108,13 @@ public class App {
         if (maisVelho != null) {
             System.out.println("Funcionário com a maior idade:\n");
             System.out.println("Nome: " + maisVelho.getNome());
-            System.out.println("Idade: " + maiorIdade + " anos");
-            System.out.println();
+            System.out.println("Idade: " + maiorIdade + " anos\n");
         }
     }
 
     public static void printFuncionariosOrdemAlfabetica() {
         Collections.sort(funcionarios, Comparator.comparing(Funcionario::getNome));
         printFuncionarios();
-        System.out.println();
     }
 
     public static void printTotalSalarios() {
@@ -152,8 +123,7 @@ public class App {
             totalSalarios = totalSalarios.add(funcionario.getSalario());
         }
         String totalSalariosFormatado = String.format(new Locale("pt", "BR"), "%,.2f", totalSalarios);
-        System.out.println("Total dos salários: " + totalSalariosFormatado);
-        System.out.println();
+        System.out.println(totalSalariosFormatado + "\n");
     }
 
     public static void printSalariosMinimos() {
@@ -161,7 +131,7 @@ public class App {
         for (Funcionario funcionario : funcionarios) {
             double salariosMinimos = funcionario.getSalario().doubleValue() / salarioMinimo;
             System.out.println("Nome: " + funcionario.getNome());
-            System.out.printf("Salários Mínimos: %.2f", salariosMinimos);
+            System.out.printf("Salários Mínimos: %.2f\n", salariosMinimos);
             System.out.println();
         }
     }
