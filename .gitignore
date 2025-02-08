@@ -1,3 +1,7 @@
 .vscode/
 output/
 *.class
+
+# Files
+mega.ts
+remote-control.ts
